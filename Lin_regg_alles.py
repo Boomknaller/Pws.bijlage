@@ -1,18 +1,15 @@
 import pandas as pd
+from sklearn.linear_model import LinearRegression
 
-from sklearn import linear_model
-import numpy as np
-#dsd
+df = pd.read_excel('Open, close en ticker Stockpolls PWS.xlsx')
 
-linreg = linear_model.LinearRegression()
-
-
-df = pd.read_csv('alles.csv')
 X = df[['open']]
 Y = df[['close']]
 
-linregab = linreg.fit(X, Y)
-coef = linreg.coef_(X, Y)
+linreg = LinearRegression()
+
+linreg.fit(X,Y)
+coef = linreg.coef_
 r_sq = linreg.score(X, Y)
-print ('coefficient '+str(r_sq))
-print ('coefficient '+str(coef))
+print('R^2-waarde: ', r_sq)
+print('coëfficiënt:', coef)
