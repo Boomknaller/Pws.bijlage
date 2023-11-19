@@ -1,50 +1,32 @@
 import numpy as np
-class Layer:
-    def __init__(self):
-        self.input = None
-        self.output = None
+from Layer import Layer
+from Dense import Dense
+from Activation import Tanh
+from Network import train, predict
+from losses import mse, mse_prime
+import pandas as pd
+from IPython.display import display
 
-    def forward(self, input):
-        # TODO: return output
-        pass
+# df = pd.read_csv("alles.csv")
+# nameAndOpen = df[['ticker','open', 'close']]
+# display(nameAndOpen)
+# display(nameAndOpen.loc[(df['ticker']=='CTT')])
+# row_count = len(nameAndOpen.loc[(df['ticker']=='CTT')])
+# print(row_count)
+row_count = 6
 
-    def backward(self, output_gradient, learning_rate):
-        # TODO: update parameters and return input gradient
-        pass
+# network
+network = [
+     Dense(3,4),
+     Tanh(),
+     Dense(4,1),
+     Tanh()
+     # Dense(row_count,row_count),
+     # Dense(row_count,row_count)
+     ]
 
+X = np.reshape(np.arange(60), (20, 3, 1))
+Y = np.reshape((np.arange(20)+1) % 2, (20, 1, 1))
 
-
-
-    ----
-
-    import numpy as np
-
-    class MSE:
-        def mse(y_true, y_pred):
-            return np.mean(np.power(y_true - y_pred, 2))
-
-        def mse_prime(y_true, y_pred):
-            return 2 * (y_pred - y_true) / np.size(y_true)
-
-
-
-
-        -------
-
-        import numpy as np
-
-        class Dense():
-            def __init__(self, input_size, output_size):
-                self.weights = np.random.randn(output_size, input_size)
-                self.bias = np.random.randn(output_size, 1)
-
-            def forward(self, input):
-                self.input = input
-                return np.dot(self.weights, self.input) + self.bias
-
-            def backward(self, output_gradient, learning_rate):
-                weights_gradient = np.dot(output_gradient, self.input.T)
-                input_gradient = np.dot(self.weights.T, output_gradient)
-                self.weights -= learning_rate * weights_gradient
-                self.bias -= learning_rate * output_gradient
-                return input_gradient
+# train
+train(network, mse, mse_prime, X, Y) # , epochs=10000, learning_rate=0.1)
