@@ -23,8 +23,8 @@ def update_date(date, days):
 
 if __name__ == "__main__":
     api_key = "icjXXqxEtJ8FGdGebhw3y36fpe3I0_DU"                         # Toegewezen Api key
-    days_to_iterate = 730                                                # Aantal dagen die een lus doorloopt
-    current_date = datetime(year=2023, month=8, day=30)                  # Begindatum van opgevraagde gegevens
+    days_to_iterate = 825                                                # Aantal dagen die een lus doorloopt
+    current_date = datetime(year=2021, month=8, day=16)                  # Begindatum van opgevraagde gegevens
 # Iteratie over de opgegeven aantal dagen
     for _ in range(days_to_iterate):
         current_date_str = current_date.strftime('%Y-%m-%d')             # indeling van de huidige datum

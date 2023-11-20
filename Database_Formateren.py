@@ -10,7 +10,7 @@ class Format:
 
     def laad_bestanden(self, aantal_bestanden):
         for datum in (
-                datetime(2021, 8, 16) + timedelta(days)
+                datetime(2023, 9, 25) + timedelta(days)
                 for days in range(aantal_bestanden)
         ):
             self.laadBestandMetDatum(datum)
@@ -58,4 +58,4 @@ class Format:
 
 if __name__ == "__main__":
     format = Format()
-    format.laad_bestanden(aantal_bestanden=772)
+    format.laad_bestanden(aantal_bestanden=53)
