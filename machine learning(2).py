@@ -4,8 +4,9 @@ from sklearn.metrics import mean_squared_error
 from math import sqrt
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+import numpy as np
 
-# Lees de dataset in
+# De dataset wordt ingelezen
 data = pd.read_csv('koersen AAPL.csv', parse_dates=['Date'])
 data.set_index('Date', inplace=True)
 
@@ -60,12 +61,28 @@ future_data = pd.DataFrame(index=future_dates)
 future_data['dayofyear'] = future_data.index.dayofyear
 future_data['lag_1'] = data['close'].shift(1)[-1]
 
+# Voorspelling voor toekomstige data
 extended_forecast = model.predict(future_data[features])
-print(f'Laatste voorspelde waarde: {extended_forecast[-1]}')  # Print de laatste voorspelde waarde
-plt.plot(future_data.index, extended_forecast, label='Uitgebreide voorspelling', linestyle='dashed', color='green')
+
+# Sinusvormige flux toevoegen
+sinusoidal_factor = 10
+sinusoidal_pattern = sinusoidal_factor * np.sin(np.arange(num_forecast_days) * (2 * np.pi / 365))
+
+# Het zorgt dat de lengtes matchen
+if len(extended_forecast) > len(sinusoidal_pattern):
+    extended_forecast = extended_forecast[:-1]
+else:
+    sinusoidal_pattern = sinusoidal_pattern[:-1]
+
+extended_forecast_with_fluctuation = extended_forecast + sinusoidal_pattern
+
+print(f'Laatste voorspelde waarde: {extended_forecast_with_fluctuation[-1]}')  # Print de laatste voorspelde waarde
+plt.plot(future_data.index, extended_forecast_with_fluctuation, label='Uitgebreide voorspelling met fluctuatie', linestyle='dashed', color='green')
 
 plt.title('XGBoost Voorspelling')
 plt.xlabel('Datum')
 plt.ylabel('Slotkoers')
 plt.legend()
 plt.show()
+
+
