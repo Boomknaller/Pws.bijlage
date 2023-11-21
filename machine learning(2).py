@@ -61,6 +61,7 @@ future_data['dayofyear'] = future_data.index.dayofyear
 future_data['lag_1'] = data['close'].shift(1)[-1]
 
 extended_forecast = model.predict(future_data[features])
+print(f'Laatste voorspelde waarde: {extended_forecast[-1]}')  # Print de laatste voorspelde waarde
 plt.plot(future_data.index, extended_forecast, label='Uitgebreide voorspelling', linestyle='dashed', color='green')
 
 plt.title('XGBoost Voorspelling')
