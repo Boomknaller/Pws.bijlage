@@ -68,7 +68,7 @@ extended_forecast = model.predict(future_data[features])
 sinusoidal_factor = 10
 sinusoidal_pattern = sinusoidal_factor * np.sin(np.arange(num_forecast_days) * (2 * np.pi / 365))
 
-# Het zorgt dat de lengtes matchen
+# Zorgen dat de lengtes matchen
 if len(extended_forecast) > len(sinusoidal_pattern):
     extended_forecast = extended_forecast[:-1]
 else:
